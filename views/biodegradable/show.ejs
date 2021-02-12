@@ -1,0 +1,63 @@
+<%- include('../header'); -%>
+<script src="https://kit.fontawesome.com/8d376fc41c.js" crossorigin="anonymous"></script>
+  
+<!-- Main -->
+<main id="main">
+    <div class="section-title mt-5">
+        <h2>Organisations (NGO's)</h2>
+        <p>This are the organisation registered to us who might interested with your concern.</p>
+      </div>
+    <div class="container mb-5 border px-3">
+      <div class="d-flex align-items-end flex-column" style="margin: 10px 20px;">
+        <div class="btn-group">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select your filter
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/biodegradable/show?category=poor">Poor People</a>
+            <a class="dropdown-item" href="/biodegradable/show?category=animals">Animals</a>
+            <a class="dropdown-item" href="/biodegradable/show?category=both">Both</a>
+            <a class="dropdown-item" href="/biodegradable/show?category=showall">Show All</a>
+          </div>
+        </div>
+        
+      </div>
+        
+        
+        <% if(category === 'showall'){ %>
+          <div class="alert alert-info" role="alert" style="text-align: center;">
+            <b>Showing all results</b>
+          </div>
+        <% }else{ %>
+          <div class="alert alert-info" role="alert" style="text-align: center;">
+            Showing results based on your location for your search<b> <%= category %> </b>
+          </div>
+        <% } %>
+        <% for(org of organization){ %>
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img class="rounded" src="../assets/img/about-us.jpg" width="100%" alt="...">
+                    </div>
+                    <div class="col-md-8" style="text-transform: capitalize;">
+                        <div class="card-body">
+                            <h5 class="card-title"><b><%= org.name %></b></h5>
+                            <h7><%= org.email %></h7>
+                            <p class="card-text" ><%= org.address %> , <%= org.city %> , <%= org.state %> </p>
+                            <p class="card-text" style="color: cadetblue;"><%= org.category %></p>
+                            <a href="/profile?q=<%= org._id %>"><button type="button" class="btn btn-success">view profile</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <%}%>
+        
+        
+    </div>
+</main>
+
+
+<!-- End Main -->
+  
+
+<%- include('../footer'); -%>

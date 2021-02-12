@@ -1,0 +1,85 @@
+<%- include('../header'); -%>
+
+<main id="main">
+
+    <!-- ======= Register Section ======= -->
+    <section id="contact" class="contact section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Register As a user</h2>
+          <p>Please enter your credentials below to proceed forward with the process.
+               If you have any queries before registration you can contact us with the information provided below.</p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-4">
+            <div class="info d-flex flex-column justify-content-center" data-aos="fade-right">
+              <div class="address">
+                <i class="icofont-google-map"></i>
+                <h4>Location:</h4>
+                <p>NIT Silchar<br>India, IN 788010</p>
+              </div>
+
+              <div class="email">
+                <i class="icofont-envelope"></i>
+                <h4>Email:</h4>
+                <p>contact@green.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="icofont-phone"></i>
+                <h4>Call:</h4>
+                <p>+1 5589 55488 55</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0">
+
+            <form action="/user/register" method="POST" role="form" class="php-email-form" data-aos="fade-left">
+              <div class="form-row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="user[name]" class="form-control" id="user[name]" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="email" class="form-control" name="user[email]" id="user[email]" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="password" class="form-control" name="user[password]" id="user[password]" placeholder="Your Password" data-rule="password" data-msg="Please enter a valid password" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="text" class="form-control" name="user[phone]" id="user[phone]" placeholder="Your Phone Number" data-rule="phone" data-msg="Please enter a valid Phone Number" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-12 form-group">
+                  <input type="text" class="form-control" name="user[address]" id="inputAddress" placeholder="Your Address">
+                </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <input type="text" class="form-control" name="user[city]" id="inputCity" placeholder="Your City">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <input type="text" class="form-control" name="user[state]" id="inputState" placeholder="Your State">
+                  </div>
+              </div>
+              <div class="text-center"><button type="submit">Submit</button></div>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+<%- include('../footer'); -%>
