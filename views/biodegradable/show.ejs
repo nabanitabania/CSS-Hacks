@@ -14,8 +14,8 @@
             Select your filter
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="/biodegradable/show?category=poor">Poor People</a>
-            <a class="dropdown-item" href="/biodegradable/show?category=animals">Animals</a>
+            <a class="dropdown-item" href="/biodegradable/show?category=poor">Needy People</a>
+            <a class="dropdown-item" href="/biodegradable/show?category=animals">Stray Animals</a>
             <a class="dropdown-item" href="/biodegradable/show?category=both">Both</a>
             <a class="dropdown-item" href="/biodegradable/show?category=showall">Show All</a>
           </div>
@@ -42,7 +42,7 @@
                     <div class="col-md-8" style="text-transform: capitalize;">
                         <div class="card-body">
                             <h5 class="card-title"><b><%= org.name %></b></h5>
-                            <h7><%= org.email %></h7>
+                            <h7 style="text-transform: lowercase;"><%= org.email %></h7>
                             <p class="card-text" ><%= org.address %> , <%= org.city %> , <%= org.state %> </p>
                             <p class="card-text" style="color: cadetblue;"><%= org.category %></p>
                             <a href="/profile?q=<%= org._id %>"><button type="button" class="btn btn-success">view profile</button></a>

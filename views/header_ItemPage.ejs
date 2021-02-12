@@ -10,21 +10,21 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/logo.png" rel="icon">
+  <link href="../../assets/img/logo.png" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../assets/vendor/venobox/venobox.css" rel="stylesheet">
-  <link href="../assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="../../assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/aos/aos.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="../assets/css/style.css" rel="stylesheet">
+  <link href="../../assets/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -37,12 +37,12 @@
 
       <!-- The main logo is shown in mobile version only. The centered nav-logo in nav menu is displayed in desktop view  -->
       <div class="logo d-block d-lg-none">
-        <a href="index.html"><img src="../assets/img/logo.png" alt="" class="img-fluid"></a>
+        <a href="index.html"><img src="../../assets/img/logo.png" alt="" class="img-fluid"></a>
       </div>
 
       <nav class="nav-menu d-none d-lg-block">
         <ul class="nav-inner">
-          <li class="nav-logo" style="width: 20%;"><a href=""><img src="../assets/img/logo.png" alt="" class="img-fluid"></a></li>
+          <li class="nav-logo" style="width: 20%;"><a href=""><img src="../../assets/img/logo.png" alt="" class="img-fluid"></a></li>
 
           <li class="active"><a href="/">Home</a></li>
           <li class="drop-down"><a href="">About</a>
@@ -61,25 +61,23 @@
               </li>
             </ul>
           </li>
+          <li><a href="#services">Services</a></li>
 
 
           <% if(!user){ %>
             <li class="drop-down"><a href="">Register</a>
               <ul>
                 <a href="/user/register" class="">As a user</a>
-                <a href="/userOrg/register" class="">As an NGO</a>
+                <a href="/userOrg/register" class="">As an Organization</a>
               </ul>
             </li>
             <li class="drop-down"><a href="">Login</a>
               <ul>
                 <a href="/user/login" class="">As a user</a>
-                <a href="/userOrg/login" class="">As an NGO</a>
+                <a href="/userOrg/login" class="">As an Organization</a>
               </ul>
             </li>
             <% }else{ %>
-              <% if(user.data === 'user'){ %>
-                <li><a href="/biodegradable/show">Biodegradable</a></li>
-              <%} %>
               <li class="drop-down"><a href=""> <%= user.name %></a>
                 <ul>
                   <% if(user.data === 'user'){ %>
@@ -90,7 +88,10 @@
                   <a href="/logout" class="">LogOut</a>
                 </ul>
               </li>
-              
+              <% if(user.data === 'user'){ %>
+                <li class="active"><a href="/biodegradable/show">Biodegradable</a></li>
+                <li class="active"><a href="/nonbiodegradable/">Non-Biodegradbale</a></li>
+              <%} %>
             <% } %>
 
         </ul>

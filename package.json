@@ -1,29 +1,33 @@
 {
-  "name": "css-hacks",
+  "name": "web",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "dotenv": "^8.2.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.1",
-    "mongoose": "^5.11.15",
-    "path": "^0.12.7"
-  },
-  "devDependencies": {},
   "scripts": {
-    "start" : "node ./index.js"  ,
-    "dev": " nodemon ./index.js "
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nabanitabania/CSS-Hacks.git"
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nabanitabania/CSS-Hacks/issues"
-  },
-  "homepage": "https://github.com/nabanitabania/CSS-Hacks#readme"
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.24.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "crypto-random-string": "^3.3.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.12",
+    "multer": "^1.4.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "nodemailer": "^6.4.17",
+    "nodemon": "^2.0.7",
+    "path": "^0.12.7",
+    "python-shell": "^2.0.3"
+  }
 }

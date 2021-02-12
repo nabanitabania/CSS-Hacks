@@ -100,6 +100,26 @@
     <p>Your profile information.</p>
   </div>
     <div class="main-body">
+
+      <div class="flash">
+        <% if (flashMessages) { %>
+          <% if (flashMessages.success) { %>
+            <div class="alert alert-success" role="alert">
+              <div style="text-align: center;"><%= flashMessages.success %></div>
+              <button type="button" style="margin-top: -23px;" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          <% } else if (flashMessages.error) { %>
+            <div class="alert alert-danger" role="alert">
+              <div style="text-align: center;"><%= flashMessages.error %></div>
+              <button type="button" style="margin-top: -23px;" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          <% } %>
+        <% } %>
+      </div>
     
     
           <div class="row gutters-sm">
@@ -125,7 +145,7 @@
                         <p style="color: teal;" class="mb-1"><%= user.data %></p>
                       <%}%>
                       
-                      <p class="text-muted font-size-sm"><b>Contributions : </b> count</p>
+                      <p class="text-muted font-size-sm"><b>Contributions : </b> <%= getUser.count %></p>
                       <% if(!q){ %>
                         <button type="button" class="btn btn-success">Update Profile</button>
                         <button type="button" class="btn btn-danger">Delete Profile</button>
@@ -153,7 +173,7 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Email</h6>
                     </div>
-                    <div class="col-sm-9" style="color: teal;">
+                    <div class="col-sm-9" style="color: teal; text-transform: lowercase;">
                       <%= getUser.email %>
                     </div>
                   </div>
@@ -231,6 +251,9 @@
             </div>
             <div class="mb-3">
               <input style ="display: none;" type="email" class="form-control" id="exampleFormControlInput1" name="email" value =<%= getUser.email %>>
+            </div>
+            <div class="mb-3">
+              <input style ="display: none;" type="text" class="form-control" id="exampleFormControlInput2" name="id" value =<%= getUser._id %>>
             </div>
             <div class="mb-3">
               <label ><b>Message For the Organization :</b></label>

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
 
 const orgSchema = new Schema(
@@ -46,5 +47,24 @@ const orgSchema = new Schema(
         }
     }
 );
+
+orgSchema.statics.validate = async function(email,password){
+    const foundUser = await this.findOne({email});
+    console.log(foundUser.password)
+    if(foundUser)
+    {
+        const hash = await bcrypt.compare(password, foundUser.password);
+        console.log(hash);
+        
+        return hash ? foundUser : false;
+    }
+    return false;
+}
+
+orgSchema.pre('save',async function(next){
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+})
+
 
 module.exports = Org = mongoose.model("Org",orgSchema);
