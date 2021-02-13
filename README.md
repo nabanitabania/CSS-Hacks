@@ -8,6 +8,10 @@
 5.  Add the `NODEMAILER_EMAIL`, `NODEMAILER_PASSWORD`, `CLOUDINARY_CLOUD_NAME`,`CLOUDINARY_KEY`,`CLOUDINARY_SECRET` ,`JWT_SECRET` to the ".env" file present in root directory
 6. Run `npm start` *Or* `npm run dev` or `nodemon`
 
+# Languages used
+1.Javascript
+2.Python 3.8
+
 ### Contributors
 1.Asis Kumar Roy
 2.Manash Pratim Das
