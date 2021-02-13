@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require("jsonwebtoken");
+const cryptoRandomString = require('crypto-random-string');
 const User = require("../models/user");
 const auth = require("../middleware/auth");
-const Org = require("../models/organization")
+const Org = require("../models/organization");
+const Token = require("../models/token")
 const {mailtoOrg} = require('../utils/nodemail')
 const {PythonShell} = require('python-shell');
 const ejs = require("ejs");
@@ -98,7 +99,11 @@ router.post('/profile',auth,async (req,res)=>{
     else 
     {
       host=req.get('host');
-      link1="http://"+req.get('host')+"/biodegradable/success?id="+req.body.id+"&id2="+req.user.userId;
+      var token  = cryptoRandomString({length: 100, type: 'url-safe'});
+      const t = new Token({token});
+      await t.save();
+            
+      link1="http://"+req.get('host')+"/biodegradable/success?id="+req.body.id+"&id2="+req.user.userId+"&q="+token;
       link2="http://"+req.get('host')+"/";
       link3="http://"+req.get('host')+"/profile?id="+req.user.userId;
       const query = "";
