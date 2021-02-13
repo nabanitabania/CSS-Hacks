@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const Items = require("./models/items")
 const flash = require("connect-flash");
 require("dotenv").config();
 
@@ -53,10 +54,12 @@ const userRoutes = require("./routes/user");
 const orgRoutes = require("./routes/org")
 const mainRoutes = require("./routes/main");
 const biodegradableRoutes = require("./routes/biodegradable");
+const nonbiodegradableRoutes = require("./routes/nonbiodegradable");
 app.use("/user",userRoutes);
 app.use("/userOrg",orgRoutes);
 app.use("/",mainRoutes);
 app.use("/biodegradable",biodegradableRoutes);
+app.use("/nonbiodegradable",nonbiodegradableRoutes);
 
 
 

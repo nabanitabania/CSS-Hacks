@@ -9,7 +9,8 @@ const {PythonShell} = require('python-shell');
 const ejs = require("ejs");
 const multer  = require('multer');
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs');
+const Item = require('../models/items')
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
       cb(null, 'uploads/');
@@ -41,37 +42,44 @@ router.get('/profile',auth,async (req,res)=>{
   console.log(user);
   // console.log(user);
   const {q,id} = req.query;
+  const items = await Item.find();
   //console.log(q);
   let getUser;
   try{
     
-    if(q || id)
+    if(user.data == 'user')
     {
       if(q)
-      {
         getUser = await Org.findById(q);
-      }
-      if(id)
+      else
       {
-        getUser = await User.findById(id);
+        if(id)
+          getUser = await User.findById(id);
+        else
+          getUser = await User.findById(user.userId);
       }
+    }
+    else if(user.data == 'org')
+    {
+        if(id)
+          getUser = await User.findById(id);
+        else
+        {
+          if(q)
+            getUser = await Org.findById(q);
+          else
+            getUser = await Org.findById(user.userId);
+        }
     }
     else
-    {
-      console.log(user.data);
-      if(user.data == 'user')
-        getUser = await User.findById(user.userId)
-      else if(user.data == 'org')
-        getUser = await Org.findById(user.userId)
-      else
-        getUser = undefined;
-    }
+      getUser = undefined;
+
     if(getUser==undefined)
     {
-        req.flash("error", "Par likhke IAS YAS bano , Desh ka naam roshan karo idhar hamare bugs kyu khoj rhe ho ?");
+        req.flash("error", "Try logging in");
         res.redirect('/')
-    } else 
-    res.render("profile/profile",{user,getUser,q,id,flashMessages: res.locals.flashMessages});
+    } 
+    res.render("profile/profile",{user,getUser,q,id,items,flashMessages: res.locals.flashMessages});
 }catch {
   // req.flash("error", "Please authenticate first");
   req.flash("error", "Mongo error");
@@ -92,8 +100,9 @@ router.post('/profile',auth,async (req,res)=>{
       host=req.get('host');
       link1="http://"+req.get('host')+"/biodegradable/success?id="+req.body.id+"&id2="+req.user.userId;
       link2="http://"+req.get('host')+"/";
+      link3="http://"+req.get('host')+"/profile?id="+req.user.userId;
       const query = "";
-      ejs.renderFile("./views/miscellaneous/mail.ejs",{msg: req.body.msg,user: req.user,link1,link2,query},async function (err, data) {
+      ejs.renderFile("./views/miscellaneous/mail.ejs",{msg: req.body.msg,user: req.user,link1,link2,link3,query},async function (err, data) {
         if (err) {
           console.log(err);
         } else {

@@ -6,6 +6,7 @@ const auth = require("../middleware/auth");
 const { findById, find } = require("../models/organization");
 const {mail2} = require('../utils/nodemail')
 const ejs = require("ejs");
+const Review = require("../models/review");
 
 router.get("/show",auth,async (req,res)=>{
     try{
@@ -20,7 +21,7 @@ router.get("/show",auth,async (req,res)=>{
     else if(category == 'poor' || category == 'animals')
     {
         organization = await org.find({city,category});
-        let orz = await org.find({city,category: 'both'})
+        let orz = await org.find({city,category: 'both'});
 
         for(let i = 0; i<orz.length; i++)
             organization.push(orz[i]);
@@ -35,6 +36,47 @@ router.get("/show",auth,async (req,res)=>{
     }
 })
 
+
+router.get("/show1",auth,async (req,res)=>{
+  try{
+  const user = req.user;
+  const getUser = await User.findById(user.userId);
+  const city = getUser.city;
+  const {sort} = req.query;
+  let organization;
+  let category;
+  if(sort == 'asc')
+    organization = await org.find({city}).sort({count: 1});
+  else
+    organization = await org.find({city}).sort({count: -1})
+  res.render("biodegradable/show.ejs",{organization,user,category});
+  }catch{
+      req.flash("error", "Please authenticate first as User");
+      res.redirect('/')
+  }
+})
+
+router.get('/review',auth,(req,res)=>{
+  const user = req.user;
+  const {q} = req.query;
+  res.render("miscellaneous/review",{user,q})
+})
+
+router.post('/review/:id',auth,(req,res)=>{
+  const id = req.params.id;
+  console.log(id);
+
+  const review = new Review({
+    review: req.body.review,
+    rating: 5,
+    authororg :{
+      id: id
+    },
+    username: req.body.username
+  });
+  review.save();
+  res.redirect("/profile/?q="+id);
+})
 
 router.get("/success",async(req,res)=>{
     const {id,id2} = req.query; 
@@ -69,7 +111,7 @@ router.get('/closedeal',async(req,res)=>{
     const data = "Deal is closed "+user.name+". Please provide your valuable review to "+org.name;
     const query= "review";
     host=req.get('host');
-    link="http://"+req.get('host')+"/profile?iq="+org._id+"&r=review";
+    link="http://"+req.get('host')+"/biodegradable/review?q="+org._id;
     ejs.renderFile("./views/miscellaneous/mail.ejs",{msg: data,user,query,link},async function (err, data) {
         if (err) {
           console.log(err);

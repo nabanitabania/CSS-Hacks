@@ -3,17 +3,23 @@
         <title>Mail</title>
         
     </head>
-    <body>
-        <p>
+    <body style="padding: 40px;">
+         <div>
+            <img src="https://images-na.ssl-images-amazon.com/images/I/51D-9qGCi1L._SL1000_.jpg" style="width: 150px">            
+        </div>
+        <p style="background-color: #80808069; padding: 20px;">
             <% if(query === 'close'){%>
-                Hello <%= org.name %>, Close your deal.<br><b>Message</b> :<i><%= msg %></i> <br> 
+                Hello <%= org.name %>, Close your deal.<br><br><b>Message</b> :<i><%= msg %></i> <br> 
             <% }else if(query === 'review'){ %>
-                Hello <%= user.name %>, Give a review<br><b>Message</b> :<i><%= msg %></i> <br>
+                Hello <%= user.name %>, Give a review<br><br><b>Message</b> :<i><%= msg %></i> <br>
             <% }else{ %>
                 Hello <%= user.name %>, wants to contact you .<br><b>Message</b> :<i><%= msg %></i> <br> 
+                View <%= user.name %> profile
+                <a href="<%= link3 %>"><button type="button" style="background-color: orangered; color: white; width: 100px; height: 40px; border: 2px solid white; border-radius: 5px;">View Profile</button></a>
             <% } %>
            
         </p>
+      <h3>Please provide your response :</h3>
         
         <% if(query === 'close'){%>
             <a href="<%= link %>"><button type="button" style="background-color: green; color: white; width: 100px; height: 40px; border: 2px solid white; border-radius: 5px;">Close Deal</button></a>

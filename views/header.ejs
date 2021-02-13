@@ -61,6 +61,7 @@
               </li>
             </ul>
           </li>
+          <li><a href="/value">Value your waste</a></li>
 
 
           <% if(!user){ %>
@@ -79,6 +80,7 @@
             <% }else{ %>
               <% if(user.data === 'user'){ %>
                 <li><a href="/biodegradable/show">Biodegradable</a></li>
+                <li><a href="/nonbiodegradable/">Non-Biodegradbale</a></li>
               <%} %>
               <li class="drop-down"><a href=""> <%= user.name %></a>
                 <ul>

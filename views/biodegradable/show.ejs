@@ -11,6 +11,18 @@
       <div class="d-flex align-items-end flex-column" style="margin: 10px 20px;">
         <div class="btn-group">
           <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by Popularity
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/biodegradable/show1?sort=asc">ascending</a>
+            <a class="dropdown-item" href="/biodegradable/show1?sort=dsc">desending</a>
+          </div>
+        </div>
+        
+      </div>
+      <div class="d-flex align-items-end flex-column" style="margin: 10px 20px;">
+        <div class="btn-group">
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Select your filter
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -22,6 +34,7 @@
         </div>
         
       </div>
+
         
         
         <% if(category === 'showall'){ %>
@@ -44,7 +57,7 @@
                             <h5 class="card-title"><b><%= org.name %></b></h5>
                             <h7 style="text-transform: lowercase;"><%= org.email %></h7>
                             <p class="card-text" ><%= org.address %> , <%= org.city %> , <%= org.state %> </p>
-                            <p class="card-text" style="color: cadetblue;"><%= org.category %></p>
+                            <p class="card-text" style="color: cadetblue;"><%= org.category %> <br> <%= org.count %></p>
                             <a href="/profile?q=<%= org._id %>"><button type="button" class="btn btn-success">view profile</button></a>
                         </div>
                     </div>
