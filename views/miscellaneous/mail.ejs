@@ -5,10 +5,24 @@
     </head>
     <body>
         <p>
-            Hello <%= user.name %>, wants to contact you .<br><b>Message</b> :<i><%= msg %></i> <br> 
+            <% if(query === 'close'){%>
+                Hello <%= org.name %>, Close your deal.<br><b>Message</b> :<i><%= msg %></i> <br> 
+            <% }else if(query === 'review'){ %>
+                Hello <%= user.name %>, Give a review<br><b>Message</b> :<i><%= msg %></i> <br>
+            <% }else{ %>
+                Hello <%= user.name %>, wants to contact you .<br><b>Message</b> :<i><%= msg %></i> <br> 
+            <% } %>
+           
         </p>
         
-        <a href="<%= link1 %>"><button type="button" style="background-color: green; color: white; width: 100px; height: 40px; border: 2px solid white; border-radius: 5px;">Success</button></a>
-        <a href="<%= link2 %>"><button type="button" style="background-color: red; color: white; width: 100px; height: 40px; border: 2px solid white; border-radius: 5px;">Reject</button></a>
+        <% if(query === 'close'){%>
+            <a href="<%= link %>"><button type="button" style="background-color: green; color: white; width: 100px; height: 40px; border: 2px solid white; border-radius: 5px;">Close Deal</button></a>
+        <% }else if(query === 'review'){ %>
+            <a href="<%= link %>"><button type="button" style="background-color: orangered; color: white; width: 100px; height: 40px; border: 2px solid white; border-radius: 5px;">Give Review</button></a>
+        <% }else{ %>
+            <a href="<%= link1 %>"><button type="button" style="background-color: green; color: white; width: 100px; height: 40px; border: 2px solid white; border-radius: 5px;">Success</button></a>
+            <a href="<%= link2 %>"><button type="button" style="background-color: red; color: white; width: 100px; height: 40px; border: 2px solid white; border-radius: 5px;">Reject</button></a>
+        <% } %>
+        
     </body>
 </html>

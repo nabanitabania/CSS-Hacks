@@ -145,8 +145,8 @@
                         <p style="color: teal;" class="mb-1"><%= user.data %></p>
                       <%}%>
                       
-                      <p class="text-muted font-size-sm"><b>Contributions : </b> <%= getUser.count %></p>
-                      <% if(!q){ %>
+                      <p class="text-muted font-size-sm"><b>Contributions : </b><%= getUser.count %></p>
+                      <% if(!q && id || user.data === 'user'){ %>
                         <button type="button" class="btn btn-success">Update Profile</button>
                         <button type="button" class="btn btn-danger">Delete Profile</button>
                       <% }else{ %>
@@ -236,7 +236,7 @@
             </div>
           </div>
     </div>
-        <% if(q != undefined ) {%>
+        <% if(q != undefined || user.data == 'org') {%>
           <form action="/profile?q=<%= getUser._id %>" method="POST" id="contact">
             <div class="section-title" style="padding-bottom: 10px;">
               <h2>Contact Us</h2>

@@ -38,29 +38,40 @@ router.get("/logout",function(req,res){
 
 router.get('/profile',auth,async (req,res)=>{
   const user = req.user;
+  console.log(user);
   // console.log(user);
-  const {q} = req.query;
+  const {q,id} = req.query;
   //console.log(q);
   let getUser;
   try{
-    if(user.data == 'user'){
+    
+    if(q || id)
+    {
       if(q)
+      {
         getUser = await Org.findById(q);
-      else 
-        getUser = await User.findById(user.userId);
-    }
-    else if(user.data == 'org'){
-      if(!q){
-        getUser = await Org.findById(user.userId);
       }
-    }else
-        getUser = req.user;
+      if(id)
+      {
+        getUser = await User.findById(id);
+      }
+    }
+    else
+    {
+      console.log(user.data);
+      if(user.data == 'user')
+        getUser = await User.findById(user.userId)
+      else if(user.data == 'org')
+        getUser = await Org.findById(user.userId)
+      else
+        getUser = undefined;
+    }
     if(getUser==undefined)
     {
         req.flash("error", "Par likhke IAS YAS bano , Desh ka naam roshan karo idhar hamare bugs kyu khoj rhe ho ?");
         res.redirect('/')
     } else 
-        res.render("profile/profile",{user,getUser,q,flashMessages: res.locals.flashMessages});
+    res.render("profile/profile",{user,getUser,q,id,flashMessages: res.locals.flashMessages});
 }catch {
   // req.flash("error", "Please authenticate first");
   req.flash("error", "Mongo error");
@@ -79,13 +90,20 @@ router.post('/profile',auth,async (req,res)=>{
     else 
     {
       host=req.get('host');
-      link1="http://"+req.get('host')+"/userOrg/success?id="+req.body.id;
+      link1="http://"+req.get('host')+"/biodegradable/success?id="+req.body.id+"&id2="+req.user.userId;
       link2="http://"+req.get('host')+"/";
-      ejs.renderFile("./views/miscellaneous/mail.ejs",{msg: req.body.msg,user: req.user,link1,link2},async function (err, data) {
+      const query = "";
+      ejs.renderFile("./views/miscellaneous/mail.ejs",{msg: req.body.msg,user: req.user,link1,link2,query},async function (err, data) {
         if (err) {
           console.log(err);
         } else {
-          await mailtoOrg(req.user , req.body.email ,data);
+          try{
+            await mailtoOrg(req.user , req.body.email ,data);
+          }catch{
+            req.flash("error", "Could not sent mail to "+req.body.email);
+            res.redirect('/profile?q='+q);
+          }
+          
         }
         
         });

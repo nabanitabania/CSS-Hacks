@@ -29,6 +29,23 @@ const mail = function(email,link){
         });
 }
 
+const mail2 = function(email,data){
+    mailOptions={ 
+        from: process.env.NODEMAILER_EMAIL,
+        to: email,
+        subject : "Please confirm your Email account",
+        html : data
+    }
+    transporter.sendMail(mailOptions, function(error, response){
+        if(error){
+            console.log(error);
+            res.redirect("/");
+        }else{
+            console.log("Message sent: " + response.accepted);
+        }
+    });
+}
+
 const mailtoOrg = (senderdata , receiver , data) => {
     mailOptions={ 
         from: senderdata.email,
@@ -62,4 +79,4 @@ const mailtoSeller = ( msg , seller , buyer) => {
 } 
 
 
-module.exports = {mail , mailtoOrg , mailtoSeller};
+module.exports = {mail ,mail2, mailtoOrg , mailtoSeller};

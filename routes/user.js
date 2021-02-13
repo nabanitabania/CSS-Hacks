@@ -35,7 +35,14 @@ router.post("/register",async(req,res)=>{
         var rand = cryptoRandomString({length: 100, type: 'url-safe'});
         host=req.get('host');
         link="http://"+req.get('host')+"/user/verify/"+getUser._id+"?tkn="+rand;
-        await nodemail.mail(getUser.email,link);
+        try{
+            await nodemail.mail(getUser.email,link);
+        }
+        catch{
+            req.flash("error", "This email address is not correct");
+            res.redirect("/");
+        }
+        
         req.flash("success", "You are registered, an verfication mail has been sent to you");
         res.redirect("/");
     }
@@ -74,7 +81,14 @@ router.post("/login",async (req, res) => {
             var rand = cryptoRandomString({length: 100, type: 'url-safe'});
             host=req.get('host');
             link="http://"+req.get('host')+"/user/verify/"+getUser._id+"?tkn="+rand;
-            await mail(getUser.email,link);
+            
+            try{
+                await mail(getUser.email,link);
+            }
+            catch{
+                req.flash("error", "This email address is not correct");
+                res.redirect("/");
+            }
             req.flash("error", "Email not verified, verify your email");
             res.redirect("https://mail.google.com/mail/");
             

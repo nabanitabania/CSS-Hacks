@@ -13,6 +13,7 @@ const { findById } = require("../models/organization");
 
 
 
+
 //use of modules
 router.use(bodyParser.json());
 router.use(cookieParser('secret_passcode'));
@@ -87,7 +88,13 @@ router.post("/login",async (req, res) => {
             var rand = cryptoRandomString({length: 100, type: 'url-safe'});
             host=req.get('host');
             link="http://"+req.get('host')+"/userOrg/verify/"+getUser._id+"?tkn="+rand;
-            await mail(getUser.email,link);
+            try{
+                await mail(getUser.email,link);
+            }
+            catch{
+                req.flash("error", "This email address is not correct");
+                res.redirect("/");
+            }
             res.redirect("https://mail.google.com/mail/");
             console.log("verify your email");
         }
@@ -152,13 +159,6 @@ router.get('/verify/:id',function(req,res){
         }
     });
 
-
-router.get('/success',async(req,res)=>{
-    const {id} = req.query;
-    const org = await Org.findByIdAndUpdate(id,{$inc: {count:1}});
-    
-    res.redirect("/profile?q="+id)
-})
 
 
 module.exports = router;
