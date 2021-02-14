@@ -1,5 +1,5 @@
 # CSS-Hacks
-**Installation**
+***Installation***
 
 1. Clone the repo *Or* Run `git pull origin main` if already cloned.
 2. Run "npm install" in the command prompt to install all related dependencies.
@@ -11,6 +11,8 @@
 # Languages used
 1.Javascript
 2.Python 3.8
+
+#frameworks
 
 ### Contributors
 1.Asis Kumar Roy
