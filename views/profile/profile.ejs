@@ -294,8 +294,26 @@
               <button type="submit" class="btn btn-success mb-3">Request Colaboration</button>
             </div>
           </form>
-            <% for(item of items){ %>
-              
+            <% for(r of review){ %>
+              <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6 class="mb-0">Username</h6>
+                      </div>
+                      <div class="col-sm-9" style="color: teal;">
+                        <%= r.username %>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6 class="mb-0">Review <br><br> Rating</h6>
+                      </div>
+                      <div class="col-sm-9" style="color: teal;">
+                        <%= r.review %> <br><br> <%= r.rating %>
+                      </div>
+                    </div>
+                    <hr>
             <% } %>
             
           <% } %>
