@@ -148,6 +148,10 @@ router.get("/success",auth,async(req,res)=>{
       // res.send("pata nei")
     }
     
+    
+/*  req.flash("success", "Successfully collaborated check your mail");
+     res.redirect("/")  conflict*/
+
 })
 
 router.get('/closedeal',async(req,res)=>{
@@ -184,6 +188,7 @@ router.get('/closedeal',async(req,res)=>{
       });
       res.redirect("/profile?q="+id)
     }
+
 })
 
 

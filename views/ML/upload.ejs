@@ -2,6 +2,7 @@
 <script>
     function readURL(input) {
   if (input.files && input.files[0]) {
+  
     var reader = new FileReader();
     reader.onload = function(e) {
       $('.image-upload-wrap').hide();
@@ -10,10 +11,26 @@
       $('.image-title').html(input.files[0].name);
     };
     reader.readAsDataURL(input.files[0]);
+
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
   } else {
     removeUpload();
   }
 }
+
 function removeUpload() {
   $('.file-upload-input').replaceWith($('.file-upload-input').clone());
   $('.file-upload-content').hide();
@@ -26,7 +43,9 @@ $('.image-upload-wrap').bind('dragover', function () {
     $('.image-upload-wrap').removeClass('image-dropping');
 });
 </script>
+
 <script src="https://kit.fontawesome.com/8d376fc41c.js" crossorigin="anonymous"></script>
+
 <style>
     
 .file-upload {
@@ -35,6 +54,7 @@ $('.image-upload-wrap').bind('dragover', function () {
   margin: 0 auto;
   /* padding: 20px; */
 }
+
 .file-submit-btn {
   width: 100%;
   margin: 0;
@@ -63,20 +83,27 @@ $('.image-upload-wrap').bind('dragover', function () {
   text-transform: uppercase;
   font-weight: 700;
 }
+
 .file-upload-btn:hover {
   background: #1AA059;
   color: #ffffff;
   transition: all .2s ease;
   cursor: pointer;
 }
+
+
 .file-upload-btn:active {
   border: 0;
   transition: all .2s ease;
 }
+
+
 .file-upload-content {
   display: none;
   text-align: center;
 }
+
+
 .file-upload-input {
   position: absolute;
   margin: 0;
@@ -87,35 +114,48 @@ $('.image-upload-wrap').bind('dragover', function () {
   opacity: 0;
   cursor: pointer;
 }
+
 .image-upload-wrap {
   margin-top: 20px;
   border: 4px dashed #1FB264;
   position: relative;
 }
+
 .image-dropping,
 .image-upload-wrap:hover {
   background-color: #1FB264;
   border: 4px dashed #ffffff;
 }
+
 .image-title-wrap {
   /* padding: 0 15px 15px 15px; */
   color: #222;
 }
+
 .drag-text {
   text-align: center;
 }
+
+
+.drag-text {
+  text-align: center;
+}
+
+
 .drag-text h3 {
   font-weight: 100;
   text-transform: uppercase;
   color: #15824B;
   padding: 60px 0;
 }
+
 .file-upload-image {
   max-height: 100%;
   max-width: 100%;
   margin: auto;
   /* padding: 20px; */
 }
+
 .remove-image {
   width: 100%;
   margin: 0;
@@ -130,12 +170,14 @@ $('.image-upload-wrap').bind('dragover', function () {
   text-transform: uppercase;
   font-weight: 700;
 }
+
 .remove-image:hover {
   background: #c13b2a;
   color: #ffffff;
   transition: all .2s ease;
   cursor: pointer;
 }
+
 .remove-image:active {
   border: 0;
   transition: all .2s ease;
@@ -223,18 +265,30 @@ $('.image-upload-wrap').bind('dragover', function () {
     <script>
     /* JS comes here */
     (function() {
+
         var width = 300; // We will scale the photo width to this
         var height = 0; // This will be computed based on the input stream
         var streaming = false;
+
+
+        var width = 300; // We will scale the photo width to this
+        var height = 0; // This will be computed based on the input stream
+
+        var streaming = false;
+
+
         var video = null;
         var canvas = null;
         var photo = null;
         var startbutton = null;
+
+
         function startup() {
             video = document.getElementById('video');
             canvas = document.getElementById('canvas');
             photo = document.getElementById('photo');
             startbutton = document.getElementById('startbutton');
+
             navigator.mediaDevices.getUserMedia({
                     video: true,
                     audio: false
@@ -246,13 +300,22 @@ $('.image-upload-wrap').bind('dragover', function () {
                 .catch(function(err) {
                     console.log("An error occurred: " + err);
                 });
+
             video.addEventListener('canplay', function(ev) {
                 if (!streaming) {
                     height = video.videoHeight 
                     width = video.videoWidth 
+
                     if (isNaN(height)) {
                         height = width / (4 / 3);
                     }
+
+
+                    if (isNaN(height)) {
+                        height = width / (4 / 3);
+                    }
+
+
                     // video.setAttribute('width', width);
                     // video.setAttribute('height', height);
                     canvas.setAttribute('width', width);
@@ -260,33 +323,51 @@ $('.image-upload-wrap').bind('dragover', function () {
                     streaming = true;
                 }
             }, false);
+
             startbutton.addEventListener('click', function(ev) {
                 takepicture();
                 ev.preventDefault();
             }, false);
+
             clearphoto();
         }
+
+            clearphoto();
+        }
+
         function clearphoto() {
             var context = canvas.getContext('2d');
             context.fillStyle = "#AAA";
             context.fillRect(0, 0, canvas.width, canvas.height);
+
             var data = canvas.toDataURL('image/png');
             photo.setAttribute('src', data);
         }
+
+
+            var data = canvas.toDataURL('image/png');
+            photo.setAttribute('src', data);
+        }
+
         function takepicture() {
             var context = canvas.getContext('2d');
             if (width && height) {
                 canvas.width = width;
                 canvas.height = height;
                 context.drawImage(video, 0, 0, width, height);
+
                 var data = canvas.toDataURL('image/png');
                 photo.setAttribute('src', data);
             } else {
                 clearphoto();
             }
         }
+
         window.addEventListener('load', startup, false);
     })();
     </script>
 
 <%- include('../footer'); -%>
+
+<%- include('../footer'); -%>
+
