@@ -4,7 +4,7 @@
 <!-- Main -->
 <main id="main">
     <div class="section-title mt-5">
-        <h2>Organisations</h2>
+        <h2><%= q %></h2>
         <p>This are the organisation registered to us who might interested with your concern.</p>
       </div>
     <div class="container mb-5 border px-3">
@@ -15,20 +15,22 @@
               Select your filter
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="/nonbiodegradable/cardboard?category=location">Seller based on your location</a>
-              <a class="dropdown-item" href="/nonbiodegradable/cardboard?category=all">All Seller of this category</a>
+              <a class="dropdown-item" href="/nonbiodegradable/cardboard?q=<%= q %>&category=location">Seller based on your location</a>
+              <a class="dropdown-item" href="/nonbiodegradable/cardboard?q=<%= q %>&category=all">All Seller of this category</a>
             </div>
           </div>
         </div>
-        <% if(category == 'all') {%>
+      
+        <% if(category == 'location') {%>
         <div class="alert alert-info" role="alert" style="text-align: center;">
-          Showing results of all items of this category
+          Showing results based on your <b>location</b> for your search 
         </div>
         <% }else{ %>
           <div class="alert alert-info" role="alert" style="text-align: center;">
-            Showing results based on your <b>location</b> for your search 
+            Showing results of all items of this category
           </div>
         <% } %>
+
         <div class="card">
             <div class="card-body">
               <a href="/nonbiodegradable/upload"><button type="button" style="display: inline;" class="btn btn-success btn-lg">Upload to Sell</button></a>
@@ -36,7 +38,7 @@
             </div>
           </div>
         
-          <% for(item of items){ %>
+          <% items.forEach((item)=>{ %>
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -70,7 +72,7 @@
                     </div>
                 </div>
             </div>
-        <% } %> 
+        <% }) %> 
         
     </div>
 </main>

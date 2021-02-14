@@ -1,16 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require("jsonwebtoken");
+const cryptoRandomString = require('crypto-random-string');
 const User = require("../models/user");
 const auth = require("../middleware/auth");
-const Org = require("../models/organization")
+const Org = require("../models/organization");
+const Token = require("../models/token")
+const Item = require("../models/items")
 const {mailtoOrg} = require('../utils/nodemail')
 const {PythonShell} = require('python-shell');
 const ejs = require("ejs");
 const multer  = require('multer');
 const path = require('path');
 const fs = require('fs');
-const Item = require('../models/items')
+const Review = require('../models/review')
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
       cb(null, 'uploads/');
@@ -39,19 +41,18 @@ router.get("/logout",function(req,res){
 
 router.get('/profile',auth,async (req,res)=>{
   const user = req.user;
-  console.log(user);
-  // console.log(user);
   const {q,id} = req.query;
-  const items = await Item.find();
-  //console.log(q);
+  const review = await Review.find({'authororg.id':q});
+   console.log('profile')
   let getUser;
   try{
     
     if(user.data == 'user')
     {
-      if(q)
+      if(q){
         getUser = await Org.findById(q);
-      else
+        //console.log(getUser)
+      }else
       {
         if(id)
           getUser = await User.findById(id);
@@ -79,7 +80,7 @@ router.get('/profile',auth,async (req,res)=>{
         req.flash("error", "Try logging in");
         res.redirect('/')
     } 
-    res.render("profile/profile",{user,getUser,q,id,items,flashMessages: res.locals.flashMessages});
+    res.render("profile/profile",{user,getUser,q,id,review,flashMessages: res.locals.flashMessages});
 }catch {
   // req.flash("error", "Please authenticate first");
   req.flash("error", "Mongo error");
@@ -98,7 +99,11 @@ router.post('/profile',auth,async (req,res)=>{
     else 
     {
       host=req.get('host');
-      link1="http://"+req.get('host')+"/biodegradable/success?id="+req.body.id+"&id2="+req.user.userId;
+      var token  = cryptoRandomString({length: 100, type: 'url-safe'});
+      const t = new Token({token});
+      await t.save();
+            
+      link1="http://"+req.get('host')+"/biodegradable/success?id="+req.body.id+"&id2="+req.user.userId+"&q="+token;
       link2="http://"+req.get('host')+"/";
       link3="http://"+req.get('host')+"/profile?id="+req.user.userId;
       const query = "";
@@ -127,6 +132,22 @@ router.get("/value/cardboard",auth,(req,res)=>{
   const user = req.user;
   res.render("ML/cardboard",{user});
 })
+router.get("/value/glass",auth,(req,res)=>{
+  const user = req.user;
+  res.render("ML/glass",{user});
+})
+router.get("/value/paper",auth,(req,res)=>{
+  const user = req.user;
+  res.render("ML/paper",{user});
+})
+router.get("/value/metal",auth,(req,res)=>{
+  const user = req.user;
+  res.render("ML/metal",{user});
+})
+router.get("/value/plastic",auth,(req,res)=>{
+  const user = req.user;
+  res.render("ML/plastic",{user});
+})
 
 router.get("/value",auth,(req,res)=>{
   const user = req.user;
@@ -134,14 +155,14 @@ router.get("/value",auth,(req,res)=>{
 })
 
 router.post('/value',multer({storage}).single('image'),function(req,res,next){
-  let dest = 'G:\\hacks-css\\web\\uploads\\' + req.file.filename;
+  let dest = "C:\\Users\\Manash's World\\Videos\\Final\\Hacks-css\\uploads" + req.file.filename;
   console.log(dest);
   let output;
 
   var options = {
     mode: 'text',
-    pythonPath: 'C:\\Users\\Mickey\\AppData\\Local\\Programs\\Python\\Python38\\python',
-    scriptPath: 'G:\\hacks-css\\web/',
+    pythonPath: 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Python 3.8\\Python 3.8 (64-bit)',
+    scriptPath: "C:\\Users\\Manash's World\\Videos\\Final\\Hacks-css/",
     args: [dest]
     }
   

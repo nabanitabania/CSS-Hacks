@@ -1,0 +1,85 @@
+<%- include('../header'); -%>
+
+<main id="main">
+
+    <!-- ======= Register Section ======= -->
+    <section id="contact" class="contact section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Upload your item </h2>
+          <p>Please enter your credentials below to proceed forward with the process.
+            If you have any queries before registration you can contact us with the information provided below.</p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-4">
+            <div class="info d-flex flex-column justify-content-center" data-aos="fade-right">
+              <div class="address">
+                <i class="icofont-google-map"></i>
+                <h4>Location:</h4>
+                <p>NIT Silchar<br>India, IN 788010</p>
+              </div>
+
+              <div class="email">
+                <i class="icofont-envelope"></i>
+                <h4>Email:</h4>
+                <p>contact@green.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="icofont-phone"></i>
+                <h4>Call:</h4>
+                <p>+1 5589 55488 55</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0">
+
+            <form action="/nonbiodegradable/upload" method="POST" enctype="multipart/form-data" role="form" class="php-email-form" data-aos="fade-left">
+              <div class="form-row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="[name]" placeholder="  title" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="number" class="form-control" name="price" id="user[password]" placeholder="  price" data-rule="password" data-msg="Please enter a valid password" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <input type="file" name="image" multiple />
+                    <div class="validate"></div>
+                </div>
+                <div class="form-group col-md-6">
+                  <select id="inputCategory" class="form-control" name="type">
+                    <option selected>Choose your category</option>
+                    <option value="cardboard">Cardboard</option>
+                    <option value="glass">Glass</option>
+                    <option value="metal">Metals</option>
+                    <option value="paper">Papers</option>
+                    <option value="plastic">Plastics</option>
+                  </select>
+                </div>
+              </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="description" placeholder=" description" rows="3"></textarea>
+                    </div>
+                </div>
+              <div class="text-center"><button type="submit">Submit</button></div>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+<%- include('../footer'); -%>

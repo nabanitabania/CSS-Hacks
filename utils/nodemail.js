@@ -66,8 +66,8 @@ const mailtoSeller = ( msg , seller , buyer) => {
     mailOptions={ 
         from: buyer.email,
         to: seller.email,
-        subject : "Hey Someone, " +seller.name+" wants to Buy Junk from You  !",
-        html : "Hello ,"+ seller.name +" , " + buyer.name +" wants to buy product from you . Kindly contact with him .<br>"+"<b>Message : <b>" +msg
+        subject : "Hey " +seller.name+", "+buyer.name+" wants to Buy Junk from You  !",
+        html : msg
     }
     transporter.sendMail(mailOptions, function(error, response){
         if(error){

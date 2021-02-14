@@ -17,16 +17,13 @@
   // function cameraGone(){
   //   document.getElementById("update").style.display = "none";
   // }
-
   function main(){
     document.getElementById("mainFile").click();
   };
-
   function submit1(){
     document.getElementById("submit").style.display = "block";
   }
 </script>
-
 <% } %>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -79,7 +76,6 @@
 .shadow-none {
     box-shadow: none!important;
 }
-
 .fas {
   color: green;
 }
@@ -141,7 +137,7 @@
                       <h4><%= getUser.name %></h4>
                       <% if(user.data === 'user'){ %>
                         <% if(q){ %>
-                          <p style="color: teal;" class="mb-1">NGO</p>
+                          <p style="color: teal;" class="mb-1">Others</p>
                         <% }else{ %>
                           <p style="color: teal;" class="mb-1">User</p>
                         <% } %>
@@ -150,7 +146,7 @@
                         <% if(id){ %>
                           <p style="color: teal;" class="mb-1">User</p>
                           <% }else{ %>
-                            <p style="color: teal;" class="mb-1">NGO</p>
+                            <p style="color: teal;" class="mb-1">Others</p>
                           <% } %>
                       <% } %>
                       
@@ -267,6 +263,25 @@
             </div>
           </div>
     </div>
+    <div class="section-title">
+      <h2>REVIEWS</h2>
+      <p>What other users have to say about the organisation.</p>
+    </div>
+    <div class="container mb-5">
+      <div class="card border my-1">
+        <div class="card-header">
+          Username
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Comment :</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <p>Yaha rating daal dena</p>
+        </div>
+        <div class="card-footer text-muted">
+          Yaha date and time 
+        </div>
+      </div>
+    </div>
         <% if(q != undefined || user.data == 'org') {%>
           <form action="/profile?q=<%= getUser._id %>" method="POST" id="contact">
             <div class="section-title" style="padding-bottom: 10px;">
@@ -286,21 +301,45 @@
             <div class="mb-3">
               <input style ="display: none;" type="text" class="form-control" id="exampleFormControlInput2" name="id" value =<%= getUser._id %>>
             </div>
+            <% if(getUser.category === 'others') {%>
             <div class="mb-3">
+                <label ><b>Message and Other Information For the Organization :</b></label>
+                <div class="col-md-6 form-group">
+                  <input type="file" name="image" multiple />
+                  <div class="validate"></div>  
+              <% } else {%>
               <label ><b>Message For the Organization :</b></label>
-              <textarea type="text" id="msg" name="msg" class="form-control"  rows="9"></textarea>
-            </div>
-            <div class="mb-3">
-              <button type="submit" class="btn btn-success mb-3">Request Colaboration</button>
-            </div>
+            <% } %>
+            <textarea type="text" id="msg" name="msg" class="form-control"  rows="9"></textarea>
+          </div>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-success mb-3">Request Colaboration</button>
+          </div>
           </form>
-            <% for(item of items){ %>
-              
+            <% for(r of review){ %>
+              <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6 class="mb-0">Username</h6>
+                      </div>
+                      <div class="col-sm-9" style="color: teal;">
+                        <%= r.username %>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6 class="mb-0">Review <br><br> Rating</h6>
+                      </div>
+                      <div class="col-sm-9" style="color: teal;">
+                        <%= r.review %> <br><br> <%= r.rating %>
+                      </div>
+                    </div>
+                    <hr>
             <% } %>
             
           <% } %>
     </div>
-
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -308,5 +347,4 @@
 </script>
 </body>
 </html>
-
 <%- include('../footer'); -%>

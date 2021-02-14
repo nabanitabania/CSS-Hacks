@@ -125,7 +125,7 @@ router.get('/verify/:id',function(req,res){
                     var diffhrs = Math.ceil(timeDiff / (1000 * 60));
                     console.log(diffhrs);
     
-                    if(diffhrs <= 30)
+                    if(diffhrs <= 1)
                     {
                         Org.findByIdAndUpdate(user._id,{active:true},function(err,user){
                             if(err)

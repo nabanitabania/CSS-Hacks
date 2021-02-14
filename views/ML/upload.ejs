@@ -1,0 +1,292 @@
+<%- include('../header'); -%>
+<script>
+    function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+      $('.image-title').html(input.files[0].name);
+    };
+    reader.readAsDataURL(input.files[0]);
+  } else {
+    removeUpload();
+  }
+}
+function removeUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+    $('.image-upload-wrap').addClass('image-dropping');
+  });
+  $('.image-upload-wrap').bind('dragleave', function () {
+    $('.image-upload-wrap').removeClass('image-dropping');
+});
+</script>
+<script src="https://kit.fontawesome.com/8d376fc41c.js" crossorigin="anonymous"></script>
+<style>
+    
+.file-upload {
+  background-color: #ffffff;
+  /* width: 600px; */
+  margin: 0 auto;
+  /* padding: 20px; */
+}
+.file-submit-btn {
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  background: #1FB264;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #15824B;
+  transition: all .2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.file-upload-btn {
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  background: #1FB264;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #15824B;
+  transition: all .2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.file-upload-btn:hover {
+  background: #1AA059;
+  color: #ffffff;
+  transition: all .2s ease;
+  cursor: pointer;
+}
+.file-upload-btn:active {
+  border: 0;
+  transition: all .2s ease;
+}
+.file-upload-content {
+  display: none;
+  text-align: center;
+}
+.file-upload-input {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+.image-upload-wrap {
+  margin-top: 20px;
+  border: 4px dashed #1FB264;
+  position: relative;
+}
+.image-dropping,
+.image-upload-wrap:hover {
+  background-color: #1FB264;
+  border: 4px dashed #ffffff;
+}
+.image-title-wrap {
+  /* padding: 0 15px 15px 15px; */
+  color: #222;
+}
+.drag-text {
+  text-align: center;
+}
+.drag-text h3 {
+  font-weight: 100;
+  text-transform: uppercase;
+  color: #15824B;
+  padding: 60px 0;
+}
+.file-upload-image {
+  max-height: 100%;
+  max-width: 100%;
+  margin: auto;
+  /* padding: 20px; */
+}
+.remove-image {
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  background: #cd4535;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #b02818;
+  transition: all .2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.remove-image:hover {
+  background: #c13b2a;
+  color: #ffffff;
+  transition: all .2s ease;
+  cursor: pointer;
+}
+.remove-image:active {
+  border: 0;
+  transition: all .2s ease;
+}
+</style>
+
+<body>
+    <main id="main">
+        <div class="section-title mt-5">
+            <h2>Value your waste</h2>
+            <p>Never underestimate the potential your wastes might have. Share us the image and get to know the true potential</p>
+          </div>
+        <div id="onupload" class="container mb-3" style="display: none;">
+            <div class="section-title">
+                <h3>Upload a Picture</h3>
+              </div>
+            <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                <div class="file-upload">
+                <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+                <form action="/value" method="POST" enctype="multipart/form-data"> 
+                    <div class="image-upload-wrap">
+                      <input class="file-upload-input" name="image" type='file' onchange="readURL(this);" accept="image/*" />
+                      <div class="drag-text">
+                      <h3>Drag and drop a file or select add Image</h3>
+                      </div>
+                    </div>
+                    <div class="file-upload-content">
+                        <img class="file-upload-image" src="#" alt="your image" />
+                        <div class="image-title-wrap">
+                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                        </div>
+                    </div>
+                
+                  <input type='submit' class="file-submit-btn mt-3">
+                </form>
+                </div>
+        </div>
+
+
+        <div id="onspot" class="container mt-5 mb-3">
+            <div class="section-title mt-5">
+                <h3>Click a Picture</h3>
+              </div>
+            <div class="row">
+                <div class="col-md-6 border">
+                    <b>Take a picture</b>
+                    <video id="video" style='width: 100%' class="rounded mt-3">Allow camera access.</video>
+                    <center><button class="btn btn-link text-dark" style="border-width: 3px;border-color: #a09797;" id="startbutton"><i class="fas fa-camera-retro fa-3x"></i></button></center>
+                </div>
+                <div class="output col-md-6 border">
+                <canvas id="canvas" style="display: none;"></canvas>
+                    <b>Picture Preview :</b>
+                    <img id="photo" style="width: 100%;" class="rounded my-3" alt="The screen capture will appear in this box.">
+                </div>
+            </div>
+            
+        </div>
+
+        <script>
+            function alterMethod(i){
+                if(i==1){
+                    document.getElementById("onspot").style.display = "none";
+                    document.getElementById("onupload").style.display = "block";
+                    document.getElementById("no1").style.display = "none";
+                    document.getElementById("no2").style.display = "block";
+                }else{
+                    
+                    document.getElementById("onspot").style.display = "block";
+                    document.getElementById("onupload").style.display = "none";
+                    document.getElementById("no2").style.display = "none";
+                    document.getElementById("no1").style.display = "block";
+                }
+            }
+        </script>
+        
+        <div id="no1" class="container mb-5">
+            <center><button class="btn btn-success mx-auto" onclick="alterMethod(1)">or Upload an Image </button></center>
+        </div>
+        <div id="no2" class="container mb-5"  style="display: none;">
+            <center><button class="btn btn-success mx-auto" onclick="alterMethod(2)">or Click a Picture </button></center>
+        </div>
+
+    </main>
+
+    <script>
+    /* JS comes here */
+    (function() {
+        var width = 300; // We will scale the photo width to this
+        var height = 0; // This will be computed based on the input stream
+        var streaming = false;
+        var video = null;
+        var canvas = null;
+        var photo = null;
+        var startbutton = null;
+        function startup() {
+            video = document.getElementById('video');
+            canvas = document.getElementById('canvas');
+            photo = document.getElementById('photo');
+            startbutton = document.getElementById('startbutton');
+            navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: false
+                })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function(err) {
+                    console.log("An error occurred: " + err);
+                });
+            video.addEventListener('canplay', function(ev) {
+                if (!streaming) {
+                    height = video.videoHeight 
+                    width = video.videoWidth 
+                    if (isNaN(height)) {
+                        height = width / (4 / 3);
+                    }
+                    // video.setAttribute('width', width);
+                    // video.setAttribute('height', height);
+                    canvas.setAttribute('width', width);
+                    canvas.setAttribute('height', height);
+                    streaming = true;
+                }
+            }, false);
+            startbutton.addEventListener('click', function(ev) {
+                takepicture();
+                ev.preventDefault();
+            }, false);
+            clearphoto();
+        }
+        function clearphoto() {
+            var context = canvas.getContext('2d');
+            context.fillStyle = "#AAA";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            var data = canvas.toDataURL('image/png');
+            photo.setAttribute('src', data);
+        }
+        function takepicture() {
+            var context = canvas.getContext('2d');
+            if (width && height) {
+                canvas.width = width;
+                canvas.height = height;
+                context.drawImage(video, 0, 0, width, height);
+                var data = canvas.toDataURL('image/png');
+                photo.setAttribute('src', data);
+            } else {
+                clearphoto();
+            }
+        }
+        window.addEventListener('load', startup, false);
+    })();
+    </script>
+
+<%- include('../footer'); -%>
