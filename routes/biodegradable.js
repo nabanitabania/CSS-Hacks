@@ -18,9 +18,9 @@ router.get("/show",auth,async (req,res)=>{
     const {category} = req.query;
     let organization;
 
-    if(!category || category == 'both')
-        organization = await org.find({city});  
-    else if(category == 'poor' || category == 'animals')
+    if(!category || category == 'both'){
+        organization = await org.find({city,category:{$in: ['poor', 'animals']}});
+    }else if(category == 'poor' || category == 'animals')
     {
         organization = await org.find({city,category});
         let orz = await org.find({city,category: 'both'});
@@ -28,6 +28,10 @@ router.get("/show",auth,async (req,res)=>{
         for(let i = 0; i<orz.length; i++)
             organization.push(orz[i]);
     }  
+    else if( category == 'others')
+    {
+      organization = await org.find({city,category})
+    }
     else
         organization = await org.find();
     
@@ -41,22 +45,45 @@ router.get("/show",auth,async (req,res)=>{
 
 router.get("/show1",auth,async (req,res)=>{
   try{
-  const user = req.user;
-  const getUser = await User.findById(user.userId);
-  const city = getUser.city;
-  const {sort} = req.query;
-  let organization;
-  let category;
-  if(sort == 'asc')
-    organization = await org.find({city}).sort({count: 1});
-  else
-    organization = await org.find({city}).sort({count: -1})
-  res.render("biodegradable/show.ejs",{organization,user,category});
+    const user = req.user;
+    const getUser = await User.findById(user.userId);
+    const city = getUser.city;
+    const {category,sort} = req.query;
+    let organization;
+
+    if(!category || category == 'both')
+        organization = await org.find({city}).sort({count:sort});  
+    else if(category == 'poor' || category == 'animals')
+    {
+        organization = await org.find({city,category});
+        let orz = await org.find({city,category: 'both'});
+
+        for(let i = 0; i<orz.length; i++)
+            organization.push(orz[i]);
+
+            if(sort == 'asc')
+            {
+              organization.sort(function (a, b) {
+                return a.count - b.count;
+              });
+            }
+            else{
+              organization.sort(function (a, b) {
+                return b.count - a.count;
+              });
+            }
+            
+    }  
+    else
+        organization = await org.find().sort({count:sort});
+    
+    res.render("biodegradable/show.ejs",{organization,user,category});
   }catch{
       req.flash("error", "Please authenticate first as User");
       res.redirect('/')
   }
 })
+
 
 router.get('/review',auth,(req,res)=>{
   const user = req.user;
@@ -66,17 +93,16 @@ router.get('/review',auth,(req,res)=>{
 
 router.post('/review/:id',auth,(req,res)=>{
   const id = req.params.id;
-  console.log(id);
-
   const review = new Review({
     review: req.body.review,
-    rating: 5,
+    rating: req.body.rating,
     authororg :{
       id: id
     },
     username: req.body.username
   });
   review.save();
+  req.flash("success","Your review is posted")
   res.redirect("/profile/?q="+id);
 })
 
@@ -122,9 +148,6 @@ router.get("/success",auth,async(req,res)=>{
       // res.send("pata nei")
     }
     
-    
-    req.flash("success", "Successfully collaborated check your mail");
-    res.redirect("/")
 })
 
 router.get('/closedeal',async(req,res)=>{
@@ -161,8 +184,6 @@ router.get('/closedeal',async(req,res)=>{
       });
       res.redirect("/profile?q="+id)
     }
-
-    res.redirect("/profile?q="+id)
 })
 
 

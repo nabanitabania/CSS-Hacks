@@ -91,9 +91,7 @@
     </style>
 
 <script src="https://kit.fontawesome.com/8d376fc41c.js" crossorigin="anonymous"></script>
-
-</head>
-<body>
+<main id="main">
 <div class="container mt-5 mb-5">
   <div class="section-title">
     <h2>Profile</h2>
@@ -141,7 +139,7 @@
                       <h4><%= getUser.name %></h4>
                       <% if(user.data === 'user'){ %>
                         <% if(q){ %>
-                          <p style="color: teal;" class="mb-1">NGO</p>
+                          <p style="color: teal;" class="mb-1">Others</p>
                         <% }else{ %>
                           <p style="color: teal;" class="mb-1">User</p>
                         <% } %>
@@ -150,7 +148,7 @@
                         <% if(id){ %>
                           <p style="color: teal;" class="mb-1">User</p>
                           <% }else{ %>
-                            <p style="color: teal;" class="mb-1">NGO</p>
+                            <p style="color: teal;" class="mb-1">Others</p>
                           <% } %>
                       <% } %>
                       
@@ -267,7 +265,36 @@
             </div>
           </div>
     </div>
+    
+
         <% if(q != undefined || user.data == 'org') {%>
+          <div class="section-title">
+            <h2>REVIEWS</h2>
+            <p>What other users have to say about the organisation.</p>
+          </div>
+          <% for(r of review){ %>
+            
+  
+            
+            <div class="container mb-5">
+              <div class="card border my-1">
+                <div class="card-header">
+                  <%= r.username %>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Comment :</h5>
+                  <p class="card-text"><%= r.review %></p>
+                  <p><%= r.rating %></p>
+                </div>
+                <div class="card-footer text-muted">
+                  3 mins ago
+                </div>
+              </div>
+            </div>
+          <% } %>
+
+          
+          <div class="container">
           <form action="/profile?q=<%= getUser._id %>" method="POST" id="contact">
             <div class="section-title" style="padding-bottom: 10px;">
               <h2>Contact Us</h2>
@@ -286,45 +313,31 @@
             <div class="mb-3">
               <input style ="display: none;" type="text" class="form-control" id="exampleFormControlInput2" name="id" value =<%= getUser._id %>>
             </div>
+            <% if(getUser.category === 'others') {%>
             <div class="mb-3">
+                <label ><b>Message and Other Information For the Organization :</b></label>
+                <div class="form-group">
+                  <input class="my-3" type="file" name="image" multiple />
+                  <div class="validate"></div>  
+              <% } else {%>
               <label ><b>Message For the Organization :</b></label>
-              <textarea type="text" id="msg" name="msg" class="form-control"  rows="9"></textarea>
-            </div>
-            <div class="mb-3">
-              <button type="submit" class="btn btn-success mb-3">Request Colaboration</button>
-            </div>
-          </form>
-            <% for(r of review){ %>
-              <hr>
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <h6 class="mb-0">Username</h6>
-                      </div>
-                      <div class="col-sm-9" style="color: teal;">
-                        <%= r.username %>
-                      </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <h6 class="mb-0">Review <br><br> Rating</h6>
-                      </div>
-                      <div class="col-sm-9" style="color: teal;">
-                        <%= r.review %> <br><br> <%= r.rating %>
-                      </div>
-                    </div>
-                    <hr>
             <% } %>
+            <textarea type="text" id="msg" name="msg" class="form-control"  rows="9"></textarea>
+          </div>
+          <center><div class="my-3">
+            <button type="submit" class="btn btn-success mb-3">Request Colaboration</button>
+          </div></center>
+          </form>
+        </div>
+            
             
           <% } %>
     </div>
-
+  </main>
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	
 </script>
-</body>
-</html>
 
 <%- include('../footer'); -%>

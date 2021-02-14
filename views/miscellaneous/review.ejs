@@ -1,5 +1,38 @@
 <%- include('../header'); -%>
+<style type="text/css">
+  /* component */
 
+.star-rating {
+  display:flex;
+  flex-direction: row-reverse;
+  font-size:1.5em;
+  justify-content:space-around;
+  padding:0 .2em;
+  text-align:center;
+  width:5em;
+  height: 30px;
+}
+
+.star-rating input {
+  display:none;
+}
+
+.star-rating label {
+  color: #fc0;
+  cursor:pointer;
+}
+
+.star-rating :checked ~ label {
+  color:orangered;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color:orange;
+}
+
+
+</style>
 <main id="main">
 
     <!-- ======= Register Section ======= -->
@@ -37,6 +70,8 @@
               </div>
   
             </div>
+            
+
   
             <div class="col-lg-8 mt-5 mt-lg-0">
   
@@ -49,6 +84,21 @@
                         <label for="exampleFormControlTextarea1" class="form-label">Write your review</label>
                         <textarea class="form-control" name="review" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlTextarea1" class="form-label">Give your Rating</label>
+                      <div class="star-rating">
+                        <input type="radio" id="5-stars" name="rating" value="5" />
+                        <label for="5-stars" class="star">&#9733;</label>
+                        <input type="radio" id="4-stars" name="rating" value="4" />
+                        <label for="4-stars" class="star">&#9733;</label>
+                        <input type="radio" id="3-stars" name="rating" value="3" />
+                        <label for="3-stars" class="star">&#9733;</label>
+                        <input type="radio" id="2-stars" name="rating" value="2" />
+                        <label for="2-stars" class="star">&#9733;</label>
+                        <input type="radio" id="1-star" name="rating" value="1" />
+                        <label for="1-star" class="star">&#9733;</label>
+                      </div>
+                  </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
   

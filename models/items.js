@@ -22,6 +22,10 @@ const itemSchema = new Schema(
         type:{
             type: String
         },
+        Available :{
+            type : Boolean ,
+            default : true
+        },
         author: {
             id: {
                 type: mongoose.Schema.Types.ObjectId,
