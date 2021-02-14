@@ -155,14 +155,14 @@ router.get("/value",auth,(req,res)=>{
 })
 
 router.post('/value',multer({storage}).single('image'),function(req,res,next){
-  let dest = 'G:\\hacks-css\\web\\uploads\\' + req.file.filename;
+  let dest = 'F:\\CSS-Hacks\\uploads\\' + req.file.filename;
   console.log(dest);
   let output;
 
   var options = {
     mode: 'text',
     pythonPath: 'C:\\Users\\Mickey\\AppData\\Local\\Programs\\Python\\Python38\\python',
-    scriptPath: 'G:\\hacks-css\\web/',
+    scriptPath: 'F:\\CSS-Hacks/',
     args: [dest]
     }
   
